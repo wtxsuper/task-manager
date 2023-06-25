@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->foreign('project_id')->references('id')->on('projects');
-            $table->foreign('author_id')->references('id')->on('users');
-            $table->foreign('assigner_id')->references('id')->on('users');
+            $table->foreignId('project_id')->constrained();
+            $table->foreignId('author_id')->constrained('users');
+            $table->foreignId('assigner_id')->constrained('users');
             $table->string('title');
             $table->string('description');
         });

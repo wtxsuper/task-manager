@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
-            $table->foreign('workspace_id')->references('id')->on('workspaces');
+            $table->foreignId('workspace_id')->constrained();
             $table->string('name');
         });
     }

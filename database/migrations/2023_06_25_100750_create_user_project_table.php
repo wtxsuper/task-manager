@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('user_project', function (Blueprint $table) {
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('project_id')->references('id')->on('projects');
-            $table->foreign('workspace_role_id')->references('id')->on('workspace_roles');
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('project_id')->constrained();
+            $table->foreignId('workspace_role_id')->constrained();
         });
     }
 
