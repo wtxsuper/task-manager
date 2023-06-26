@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_project', function (Blueprint $table) {
+        Schema::create('user_workspace', function (Blueprint $table) {
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('project_id')->constrained();
+            $table->foreignId('workspace_id')->constrained();
             $table->boolean('is_admin');
         });
     }
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_project');
+        Schema::dropIfExists('user_workspace');
     }
 };
