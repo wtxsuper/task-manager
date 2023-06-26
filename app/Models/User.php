@@ -17,4 +17,12 @@ class User extends Model
     {
         return $this->belongsToMany(Project::class, 'user_project');
     }
+
+    /**
+     * Get the workspaces that the user access to
+     */
+    public function workspaces(): BelongsToMany
+    {
+        return $this->belongsToMany(Workspace::class, 'user_workspace');
+    }
 }
