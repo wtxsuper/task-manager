@@ -11,14 +11,6 @@ class User extends Model
     protected $table = 'users';
 
     /**
-     * Get the workspace role that belongs to the user
-     */
-    public function workspaceRole(): BelongsToMany
-    {
-        return $this->belongsToMany(WorkspaceRole::class, 'user_project');
-    }
-
-    /**
      * Get the projects that belongs to the user
      */
     public function projects(): BelongsToMany
