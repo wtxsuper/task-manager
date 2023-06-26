@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('workspace_id')->constrained();
             $table->string('name');
+            $table->timestamps();
         });
     }
 
