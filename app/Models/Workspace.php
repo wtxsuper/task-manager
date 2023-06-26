@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Workspace extends Model
 {
-    public $timestamps = false;
+
     protected $table = 'workspaces';
 
     /**

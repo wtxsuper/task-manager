@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Model
 {
-    public $timestamps = false;
+
     protected $table = 'users';
 
     /**
