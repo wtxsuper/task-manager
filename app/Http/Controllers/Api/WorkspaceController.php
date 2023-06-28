@@ -13,7 +13,7 @@ use Spatie\LaravelIgnition\Exceptions\ViewException;
 class WorkspaceController extends Controller
 {
     // TODO: NOT WORKING CREATE RELATIONSHIP
-    // General error: 1364 Field 'is_admin' doesn't have a default value
+    // General error: 1364 Field 'user_id' doesn't have a default value
 
     public function create(Request $request)
     {

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('user_workspace', function (Blueprint $table) {
             $table->foreignId('user_id')->constrained();
             $table->foreignId('workspace_id')->constrained();
-            $table->boolean('is_admin');
+            $table->boolean('is_admin')->default(false);
         });
     }
 
