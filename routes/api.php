@@ -22,7 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::controller(UserController::class)->group(function () {
     Route::post('/user/', 'create');
-    Route::put('/user/{id}', 'update');
+    Route::put('/user/{user}', 'update');
     Route::get('/user/{id}', 'info');
     Route::delete('/user/{id}', 'delete');
 });

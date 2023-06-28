@@ -28,26 +28,24 @@ class UserController extends Controller
     }
 
     // TODO: not working!
-    public function update(int $id, Request $request)
+    public function update(Request $request, User $user)
     {
         $this->validate($request, [
             'name' => 'min:4',
             'email' => 'email',
             'password' => 'min:6',
         ]);
-
-        $user = User::find($id);
         if ($request->hasAny('name'))
         {
-            $user->name = $request->name;
+            $user->update(['name' => $request->post('name')]);
         }
         if ($request->hasAny('email'))
         {
-            $user->email = $request->email;
+            $user->update(['email' => $request->post('email')]);
         }
         if ($request->hasAny('password'))
         {
-            $user->password = bcrypt($request->password);
+            $user->update(['name' => bcrypt($request->post('password'))]);
         }
         $user->save();
 
