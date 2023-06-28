@@ -27,15 +27,45 @@ class UserController extends Controller
         ]);
     }
 
-    public function info(Request $request)
+    // TODO: not working!
+    public function update(int $id, Request $request)
     {
-        $user = User::find($request->id);
+        $this->validate($request, [
+            'name' => 'min:4',
+            'email' => 'email',
+            'password' => 'min:6',
+        ]);
+
+        $user = User::find($id);
+        if ($request->hasAny('name'))
+        {
+            $user->name = $request->name;
+        }
+        if ($request->hasAny('email'))
+        {
+            $user->email = $request->email;
+        }
+        if ($request->hasAny('password'))
+        {
+            $user->password = bcrypt($request->password);
+        }
+        $user->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'User successfully updated!'
+        ]);
+    }
+
+    public function info(int $id)
+    {
+        $user = User::find($id);
         return response()->json(['user' => $user]);
     }
 
-    public function delete(Request $request)
+    public function delete(int $id)
     {
-        $user = User::find($request->id);
+        $user = User::find($id);
         $user->delete();
         return response()->json([
             'success' => true,
