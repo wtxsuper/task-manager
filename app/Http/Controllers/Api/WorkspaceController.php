@@ -22,14 +22,14 @@ class WorkspaceController extends Controller
             'ownerID' => 'required'
         ]);
 
-        $owner = User::find($request->ownerID);
+        /*$owner = User::find($request->ownerID);*/
         $workspace = Workspace::create(['name' => $request->name]);
-        $workspace->users()->save($owner);
+        $workspace->users()->sync([$request->post('ownerID') => ['is_admin' => true]]);
 
-        DB::table('user_workspace')->where([
+        /*DB::table('user_workspace')->where([
             ['user_id', '=', $owner->id],
             ['workspace_id', '=', $workspace->id]
-        ])->updateOrInsert(['is_admin' => true]);
+        ])->updateOrInsert(['is_admin' => true]);*/
 
         return response()->json([
             'success' => true,
