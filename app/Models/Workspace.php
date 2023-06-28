@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Workspace extends Model
 {
+    protected $fillable = ['name'];
 
     protected $table = 'workspaces';
 

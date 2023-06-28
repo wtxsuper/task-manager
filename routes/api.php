@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\WorkspaceController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,4 +25,11 @@ Route::controller(UserController::class)->group(function () {
     Route::put('/user/{id}', 'update');
     Route::get('/user/{id}', 'info');
     Route::delete('/user/{id}', 'delete');
+});
+
+Route::controller(WorkspaceController::class)->group(function () {
+    Route::post('/workspaces/', 'create');
+    Route::put('/workspaces/{id}', 'update');
+    Route::get('/workspaces/{id}', 'info');
+    Route::delete('/workspaces/{id}', 'delete');
 });
