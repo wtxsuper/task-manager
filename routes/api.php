@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\TaskController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\WorkspaceController;
 use Illuminate\Http\Request;
@@ -32,4 +33,11 @@ Route::controller(WorkspaceController::class)->group(function () {
     Route::put('/workspace/{workspace}', 'update');
     Route::get('/workspace/{workspace}', 'info');
     Route::delete('/workspace/{workspace}', 'delete');
+});
+
+Route::controller(TaskController::class)->group(function () {
+    Route::post('/{project}/task/', 'create');
+    Route::put('/{project}/task/{task}', 'update');
+    Route::get('/{project}/task/{task}', 'info');
+    Route::delete('/{project}/task/{task}', 'delete');
 });
