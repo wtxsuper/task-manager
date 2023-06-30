@@ -23,13 +23,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::controller(UserController::class)->group(function () {
     Route::post('/user/', 'create');
     Route::put('/user/{user}', 'update');
-    Route::get('/user/{id}', 'info');
-    Route::delete('/user/{id}', 'delete');
+    Route::get('/user/{user}', 'info');
+    Route::delete('/user/{user}', 'delete');
 });
 
 Route::controller(WorkspaceController::class)->group(function () {
-    Route::post('/workspaces/', 'create');
-    Route::put('/workspaces/{id}', 'update');
-    Route::get('/workspaces/{id}', 'info');
-    Route::delete('/workspaces/{id}', 'delete');
+    Route::post('/workspace/', 'create');
+    Route::put('/workspace/{workspace}', 'update');
+    Route::get('/workspace/{workspace}', 'info');
+    Route::delete('/workspace/{workspace}', 'delete');
 });

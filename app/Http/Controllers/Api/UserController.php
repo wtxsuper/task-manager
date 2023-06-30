@@ -27,7 +27,6 @@ class UserController extends Controller
         ]);
     }
 
-    // TODO: not working!
     public function update(Request $request, User $user)
     {
         $this->validate($request, [
@@ -45,7 +44,7 @@ class UserController extends Controller
         }
         if ($request->hasAny('password'))
         {
-            $user->update(['name' => bcrypt($request->post('password'))]);
+            $user->update(['password' => bcrypt($request->post('password'))]);
         }
         $user->save();
 
@@ -55,15 +54,13 @@ class UserController extends Controller
         ]);
     }
 
-    public function info(int $id)
+    public function info(User $user)
     {
-        $user = User::find($id);
         return response()->json(['user' => $user]);
     }
 
-    public function delete(int $id)
+    public function delete(User $user)
     {
-        $user = User::find($id);
         $user->delete();
         return response()->json([
             'success' => true,
