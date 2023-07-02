@@ -11,10 +11,10 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    public function create(Request $request, Project $project)
+    public function create(Request $request)
     {
-        // dd($project);
         $this->validate($request, [
+            'projectID' => 'required',
             'authorID' => 'required',
             'assignerID' => 'required',
             'title' => 'required|min:4',
@@ -22,7 +22,7 @@ class TaskController extends Controller
         ]);
 
         $task = new Task;
-        $task->project()->associate($project);
+        $task->project()->associate(Project::find($request->post('projectID')));
         $task->title = $request->post('title');
         $task->description = $request->post('description');
         $task->author()->associate(User::find($request->post('authorID')));
@@ -34,44 +34,43 @@ class TaskController extends Controller
         ]);
     }
 
-    public function update(Request $request, User $user)
+    public function update(Request $request, Task $task)
     {
         $this->validate($request, [
-            'name' => 'min:4',
-            'email' => 'email',
-            'password' => 'min:6',
+            'title' => 'min:4',
+            'description' => 'min:6'
         ]);
-        if ($request->hasAny('name'))
+        if ($request->hasAny('title'))
         {
-            $user->update(['name' => $request->post('name')]);
+            $task->update(['title' => $request->post('title')]);
         }
-        if ($request->hasAny('email'))
+        if ($request->hasAny('description'))
         {
-            $user->update(['email' => $request->post('email')]);
+            $task->update(['description' => $request->post('description')]);
         }
-        if ($request->hasAny('password'))
+        if ($request->hasAny('assignerID'))
         {
-            $user->update(['password' => bcrypt($request->post('password'))]);
+            $task->update(['assigner_id' => $request->post('assignerID')]);
         }
-        $user->save();
+        $task->save();
 
         return response()->json([
             'success' => true,
-            'message' => 'User successfully updated!'
+            'message' => 'Task successfully updated!'
         ]);
     }
 
-    public function info(User $user)
+    public function info(Task $task)
     {
-        return response()->json(['user' => $user]);
+        return response()->json(['task' => $task]);
     }
 
-    public function delete(User $user)
+    public function delete(Task $task)
     {
-        $user->delete();
+        $task->delete();
         return response()->json([
             'success' => true,
-            'message' => 'User successfully deleted!'
+            'message' => 'Task successfully deleted!'
         ]);
     }
 }

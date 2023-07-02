@@ -36,8 +36,8 @@ Route::controller(WorkspaceController::class)->group(function () {
 });
 
 Route::controller(TaskController::class)->group(function () {
-    Route::post('/{project}/task/', 'create');
-    Route::put('/{project}/task/{task}', 'update');
-    Route::get('/{project}/task/{task}', 'info');
-    Route::delete('/{project}/task/{task}', 'delete');
+    Route::post('/task/', 'create');
+    Route::put('/task/{task}', 'update');
+    Route::get('/task/{task}', 'info');
+    Route::delete('/task/{task}', 'delete');
 });
