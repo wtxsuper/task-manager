@@ -21,7 +21,8 @@ class WorkspaceController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Workspace successfully created!'
+            'message' => 'Workspace successfully created!',
+            'createdWorkspaceID' => $workspace->id
         ]);
     }
 

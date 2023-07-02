@@ -16,14 +16,15 @@ class UserController extends Controller
             'password' => 'required|min:6',
         ]);
 
-        User::create([
+        $user = User::create([
             'name' => $request->post('name'),
             'email' => $request->post('email'),
             'password' => bcrypt($request->post('password'))
         ]);
         return response()->json([
             'success' => true,
-            'message' => 'User successfully registered!'
+            'message' => 'User successfully registered!',
+            'createdUserID' => $user->id
         ]);
     }
 

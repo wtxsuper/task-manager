@@ -22,7 +22,8 @@ class ProjectController extends Controller
         $project->save();
         return response()->json([
             'success' => true,
-            'message' => 'Project successfully created!'
+            'message' => 'Project successfully created!',
+            'createdProjectID' => $project->id
         ]);
     }
 

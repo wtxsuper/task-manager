@@ -29,7 +29,8 @@ class TaskController extends Controller
         $task->save();
         return response()->json([
             'success' => true,
-            'message' => 'Task successfully created!'
+            'message' => 'Task successfully created!',
+            'createdTaskID' => $task->id
         ]);
     }
 
