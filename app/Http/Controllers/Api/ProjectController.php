@@ -37,7 +37,7 @@ class ProjectController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Task successfully updated!'
+            'message' => 'Project successfully updated!'
         ]);
     }
 

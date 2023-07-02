@@ -36,7 +36,7 @@ class WorkspaceController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'User successfully updated!'
+            'message' => 'Workspace successfully updated!'
         ]);
     }
 
