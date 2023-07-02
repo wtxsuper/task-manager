@@ -22,18 +22,15 @@ class TaskController extends Controller
         ]);
 
         $task = new Task;
-        $project->tasks()->save($task);
-        $task->insert([
-            'title' => $request->post('title'),
-            'description' => $request->post('description')
-        ]);
-        dd($task);
-        $task->author()->save(User::find($request->post('authorID')));
-        $task->assigner()->save(User::find($request->post('assignerID')));
-
+        $task->project()->associate($project);
+        $task->title = $request->post('title');
+        $task->description = $request->post('description');
+        $task->author()->associate(User::find($request->post('authorID')));
+        $task->assigner()->associate(User::find($request->post('assignerID')));
+        $task->save();
         return response()->json([
             'success' => true,
-            'message' => 'Task successfully registered!'
+            'message' => 'Task successfully created!'
         ]);
     }
 

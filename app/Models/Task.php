@@ -20,13 +20,13 @@ class Task extends Model
         return $this->belongsTo(Project::class);
     }
 
-    public function author(): HasOne
+    public function author(): BelongsTo
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class, 'author_id');
     }
 
-    public function assigner(): HasOne
+    public function assigner(): BelongsTo
     {
-        return $this->hasOne(User::class);
+        return $this->BelongsTo(User::class, 'assigner_id');
     }
 }
