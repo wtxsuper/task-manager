@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Project extends Model
 {
-
+    protected $fillable = ['name'];
     protected $table = 'projects';
     /**
      * Get the project's workspace

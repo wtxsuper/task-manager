@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\TaskController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\WorkspaceController;
@@ -41,3 +42,11 @@ Route::controller(TaskController::class)->group(function () {
     Route::get('/task/{task}', 'info');
     Route::delete('/task/{task}', 'delete');
 });
+
+Route::controller(ProjectController::class)->group(function () {
+    Route::post('/project/', 'create');
+    Route::put('/project/{project}', 'update');
+    Route::get('/project/{project}', 'info');
+    Route::delete('/project/{project}', 'delete');
+});
+
