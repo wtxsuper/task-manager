@@ -35,6 +35,9 @@ Route::controller(WorkspaceController::class)->group(function () {
     Route::put('/workspace/{workspace}', 'update');
     Route::get('/workspace/{workspace}', 'info');
     Route::delete('/workspace/{workspace}', 'delete');
+    Route::get('/workspace/{workspace}/users/', 'getUser');
+    Route::post('/workspace/{workspace}/users/', 'addUser');
+    Route::delete('/workspace/{workspace}/users/', 'removeUser');
 });
 
 Route::controller(TaskController::class)->group(function () {

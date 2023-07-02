@@ -59,4 +59,42 @@ class WorkspaceController extends Controller
             'message' => 'Workspace successfully deleted!'
         ]);
     }
+
+    public function addUser(Request $request, Workspace $workspace)
+    {
+        $this->validate($request, [
+           'userID' => 'required',
+            'isAdmin' => 'required'
+        ]);
+
+
+        $workspace->users()->sync([$request->post('userID') => ['is_admin' => json_decode($request->post('isAdmin'))]]);
+        return response()->json([
+           'success' => true,
+           'message' => 'User successfully added to workspace!'
+        ]);
+    }
+
+    public function removeUser(Request $request, Workspace $workspace)
+    {
+        $this->validate($request, [
+            'userID' => 'required',
+        ]);
+
+
+        $workspace->users()->detach([$request->post('userID')]);
+        return response()->json([
+            'success' => true,
+            'message' => 'User successfully removed from workspace!'
+        ]);
+    }
+
+    public function getUser(Workspace $workspace)
+    {
+        $users = $workspace->users()->get();
+        return response()->json([
+            'workspaceID' => $workspace->id,
+            'users' => $users
+        ]);
+    }
 }
