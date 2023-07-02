@@ -65,4 +65,13 @@ class UserController extends Controller
             'message' => 'User successfully deleted!'
         ]);
     }
+
+    public function getWorkspace(User $user)
+    {
+        $workspaces = $user->workspaces()->get();
+        return response()->json([
+            'userID' => $user->id,
+            'workspaces' => $workspaces
+        ]);
+    }
 }
