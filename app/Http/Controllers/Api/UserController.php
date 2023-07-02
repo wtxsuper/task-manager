@@ -34,16 +34,13 @@ class UserController extends Controller
             'email' => 'email',
             'password' => 'min:6',
         ]);
-        if ($request->hasAny('name'))
-        {
+        if ($request->hasAny('name')) {
             $user->update(['name' => $request->post('name')]);
         }
-        if ($request->hasAny('email'))
-        {
+        if ($request->hasAny('email')) {
             $user->update(['email' => $request->post('email')]);
         }
-        if ($request->hasAny('password'))
-        {
+        if ($request->hasAny('password')) {
             $user->update(['password' => bcrypt($request->post('password'))]);
         }
         $user->save();

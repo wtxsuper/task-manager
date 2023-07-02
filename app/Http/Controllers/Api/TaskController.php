@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\User;
-use App\Models\Workspace;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -40,16 +39,13 @@ class TaskController extends Controller
             'title' => 'min:4',
             'description' => 'min:6'
         ]);
-        if ($request->hasAny('title'))
-        {
+        if ($request->hasAny('title')) {
             $task->update(['title' => $request->post('title')]);
         }
-        if ($request->hasAny('description'))
-        {
+        if ($request->hasAny('description')) {
             $task->update(['description' => $request->post('description')]);
         }
-        if ($request->hasAny('assignerID'))
-        {
+        if ($request->hasAny('assignerID')) {
             $task->update(['assigner_id' => $request->post('assignerID')]);
         }
         $task->save();
