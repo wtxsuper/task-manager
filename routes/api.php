@@ -27,7 +27,9 @@ Route::controller(UserController::class)->group(function () {
     Route::put('/user/{user}', 'update');
     Route::get('/user/{user}', 'info');
     Route::delete('/user/{user}', 'delete');
-    Route::get('/user/{user}/workspace/', 'getWorkspace');
+    Route::get('/user/{user}/workspaces/', 'getWorkspace');
+    Route::get('/user/{user}/projects/', 'getProject');
+    Route::get('/user/{user}/tasks/', 'getTasks');
 });
 
 Route::controller(WorkspaceController::class)->group(function () {

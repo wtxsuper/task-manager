@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -72,6 +73,28 @@ class UserController extends Controller
         return response()->json([
             'userID' => $user->id,
             'workspaces' => $workspaces
+        ]);
+    }
+
+    public function getProject(User $user)
+    {
+        $projects = $user->projects()->get();
+        return response()->json([
+            'userID' => $user->id,
+            'projects' => $projects
+        ]);
+    }
+
+    public function getTasks(User $user)
+    {
+        $tasks = new Collection();
+        $projects = $user->projects()->get();
+        foreach($projects as $project) {
+            $tasks->add($project->tasks()->get());
+        }
+        return response()->json([
+            'userID' => $user->id,
+            'tasks' => $tasks
         ]);
     }
 }
