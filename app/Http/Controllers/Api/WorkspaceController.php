@@ -68,7 +68,7 @@ class WorkspaceController extends Controller
         ]);
 
 
-        $workspace->users()->sync([$request->post('userID') => ['is_admin' => json_decode($request->post('isAdmin'))]]);
+        $workspace->users()->syncWithoutDetaching([$request->post('userID') => ['is_admin' => json_decode($request->post('isAdmin'))]]);
         return response()->json([
            'success' => true,
            'message' => 'User successfully added to workspace!'
