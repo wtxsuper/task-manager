@@ -52,5 +52,8 @@ Route::controller(ProjectController::class)->group(function () {
     Route::put('/project/{project}', 'update');
     Route::get('/project/{project}', 'info');
     Route::delete('/project/{project}', 'delete');
+    Route::get('/project/{project}/users/', 'getUser');
+    Route::post('/project/{project}/users/', 'addUser');
+    Route::delete('/project/{project}/users/', 'removeUser');
 });
 
