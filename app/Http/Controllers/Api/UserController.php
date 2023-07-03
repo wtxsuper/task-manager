@@ -89,7 +89,7 @@ class UserController extends Controller
     {
         $tasks = new Collection();
         $projects = $user->projects()->get();
-        foreach($projects as $project) {
+        foreach ($projects as $project) {
             $tasks->add($project->tasks()->get());
         }
         return response()->json([

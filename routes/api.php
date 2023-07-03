@@ -58,4 +58,3 @@ Route::controller(ProjectController::class)->group(function () {
     Route::post('/project/{project}/users/', 'addUser');
     Route::delete('/project/{project}/users/', 'removeUser');
 });
-

@@ -63,15 +63,15 @@ class WorkspaceController extends Controller
     public function addUser(Request $request, Workspace $workspace)
     {
         $this->validate($request, [
-           'userID' => 'required',
+            'userID' => 'required',
             'isAdmin' => 'required'
         ]);
 
 
         $workspace->users()->syncWithoutDetaching([$request->post('userID') => ['is_admin' => json_decode($request->post('isAdmin'))]]);
         return response()->json([
-           'success' => true,
-           'message' => 'User successfully added to workspace!'
+            'success' => true,
+            'message' => 'User successfully added to workspace!'
         ]);
     }
 
