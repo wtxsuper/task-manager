@@ -4,7 +4,6 @@ use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\TaskController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\WorkspaceController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,43 +17,39 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::controller(UserController::class)->group(function () {
-    Route::post('/user/', 'create');
-    Route::put('/user/{user}', 'update');
-    Route::get('/user/{user}', 'info');
-    Route::delete('/user/{user}', 'delete');
-    Route::get('/user/{user}/workspaces/', 'getWorkspace');
-    Route::get('/user/{user}/projects/', 'getProject');
-    Route::get('/user/{user}/tasks/', 'getTasks');
+    Route::post('/users/', 'create');
+    Route::put('/users/{user}', 'update');
+    Route::get('/users/{user}', 'info');
+    Route::delete('/users/{user}', 'delete');
+    Route::get('/users/{user}/workspaces/', 'getWorkspace');
+    Route::get('/users/{user}/projects/', 'getProject');
+    Route::get('/users/{user}/tasks/', 'getTasks');
 });
 
 Route::controller(WorkspaceController::class)->group(function () {
-    Route::post('/workspace/', 'create');
-    Route::put('/workspace/{workspace}', 'update');
-    Route::get('/workspace/{workspace}', 'info');
-    Route::delete('/workspace/{workspace}', 'delete');
-    Route::get('/workspace/{workspace}/users/', 'getUser');
-    Route::post('/workspace/{workspace}/users/', 'addUser');
-    Route::delete('/workspace/{workspace}/users/', 'removeUser');
+    Route::post('/workspaces/', 'create');
+    Route::put('/workspaces/{workspace}', 'update');
+    Route::get('/workspaces/{workspace}', 'info');
+    Route::delete('/workspaces/{workspace}', 'delete');
+    Route::get('/workspaces/{workspace}/users/', 'getUser');
+    Route::post('/workspaces/{workspace}/users/', 'addUser');
+    Route::delete('/workspaces/{workspace}/users/', 'removeUser');
 });
 
 Route::controller(TaskController::class)->group(function () {
-    Route::post('/task/', 'create');
-    Route::put('/task/{task}', 'update');
-    Route::get('/task/{task}', 'info');
-    Route::delete('/task/{task}', 'delete');
+    Route::post('/tasks/', 'create');
+    Route::put('/tasks/{task}', 'update');
+    Route::get('/tasks/{task}', 'info');
+    Route::delete('/tasks/{task}', 'delete');
 });
 
 Route::controller(ProjectController::class)->group(function () {
-    Route::post('/project/', 'create');
-    Route::put('/project/{project}', 'update');
-    Route::get('/project/{project}', 'info');
-    Route::delete('/project/{project}', 'delete');
-    Route::get('/project/{project}/users/', 'getUser');
-    Route::post('/project/{project}/users/', 'addUser');
-    Route::delete('/project/{project}/users/', 'removeUser');
+    Route::post('/projects/', 'create');
+    Route::put('/projects/{project}', 'update');
+    Route::get('/projects/{project}', 'info');
+    Route::delete('/projects/{project}', 'delete');
+    Route::get('/projects/{project}/users/', 'getUser');
+    Route::post('/projects/{project}/users/', 'addUser');
+    Route::delete('/projects/{project}/users/', 'removeUser');
 });

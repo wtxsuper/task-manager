@@ -8,7 +8,6 @@ use App\Http\Requests\Api\UniversalAddUserRequest;
 use App\Http\Requests\Api\UniversalRemoveUserRequest;
 use App\Http\Requests\Api\UpdateWorkspaceRequest;
 use App\Models\Workspace;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class WorkspaceController extends Controller

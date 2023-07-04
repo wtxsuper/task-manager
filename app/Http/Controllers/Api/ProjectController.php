@@ -9,7 +9,6 @@ use App\Http\Requests\Api\UniversalRemoveUserRequest;
 use App\Http\Requests\Api\UpdateProjectRequest;
 use App\Models\Project;
 use App\Models\Workspace;
-use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
