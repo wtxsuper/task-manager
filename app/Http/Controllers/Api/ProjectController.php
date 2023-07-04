@@ -3,25 +3,25 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\CreateProjectRequest;
+use App\Http\Requests\Api\UniversalAddUserRequest;
+use App\Http\Requests\Api\UniversalRemoveUserRequest;
+use App\Http\Requests\Api\UpdateProjectRequest;
 use App\Models\Project;
 use App\Models\Workspace;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
-    public function create(Request $request)
+    public function create(CreateProjectRequest $request)
     {
-        $this->validate($request, [
-            'name' => 'required|min:4',
-            'workspaceID' => 'required',
-            'ownerID' => 'required'
-        ]);
+        $validated = $request->validated();
 
         $project = new Project;
-        $project->name = $request->post('name');
-        $project->workspace()->associate(Workspace::find($request->post('workspaceID')));
+        $project->name = $validated['name'];
+        $project->workspace()->associate(Workspace::find($validated['workspaceID']));
         $project->save();
-        $project->users()->sync([$request->post('ownerID') => ['is_admin' => true]]);
+        $project->users()->sync([$validated['ownerID'] => ['is_admin' => true]]);
         return response()->json([
             'success' => true,
             'message' => 'Project successfully created!',
@@ -29,13 +29,11 @@ class ProjectController extends Controller
         ]);
     }
 
-    public function update(Request $request, Project $project)
+    public function update(UpdateProjectRequest $request, Project $project)
     {
-        $this->validate($request, [
-            'name' => 'required|min:4',
-        ]);
+        $validated = $request->validated();
 
-        $project->update(['name' => $request->post('name')]);
+        $project->update(['name' => $validated['name']]);
         $project->save();
 
         return response()->json([
@@ -58,29 +56,22 @@ class ProjectController extends Controller
         ]);
     }
 
-    public function addUser(Request $request, Project $project)
+    public function addUser(UniversalAddUserRequest $request, Project $project)
     {
-        $this->validate($request, [
-            'userID' => 'required',
-            'isAdmin' => 'required'
-        ]);
+        $validated = $request->validated();
 
-
-        $project->users()->syncWithoutDetaching([$request->post('userID') => ['is_admin' => json_decode($request->post('isAdmin'))]]);
+        $project->users()->syncWithoutDetaching([$validated['userID'] => ['is_admin' => json_decode($validated['isAdmin'])]]);
         return response()->json([
             'success' => true,
             'message' => 'User successfully added to project!'
         ]);
     }
 
-    public function removeUser(Request $request, Project $project)
+    public function removeUser(UniversalRemoveUserRequest $request, Project $project)
     {
-        $this->validate($request, [
-            'userID' => 'required',
-        ]);
+        $validated = $request->validated();
 
-
-        $project->users()->detach([$request->post('userID')]);
+        $project->users()->detach([$validated['userID']]);
         return response()->json([
             'success' => true,
             'message' => 'User successfully removed from project!'
