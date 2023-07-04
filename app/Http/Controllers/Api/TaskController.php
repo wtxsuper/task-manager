@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\CreateTaskRequest;
+use App\Http\Requests\Api\UpdateTaskRequest;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\User;
@@ -10,22 +12,16 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    public function create(Request $request)
+    public function create(CreateTaskRequest $request)
     {
-        $this->validate($request, [
-            'projectID' => 'required',
-            'authorID' => 'required',
-            'assignerID' => 'required',
-            'title' => 'required|min:4',
-            'description' => 'required|min:6'
-        ]);
+        $validated = $request->validated();
 
         $task = new Task;
-        $task->project()->associate(Project::find($request->post('projectID')));
-        $task->title = $request->post('title');
-        $task->description = $request->post('description');
-        $task->author()->associate(User::find($request->post('authorID')));
-        $task->assigner()->associate(User::find($request->post('assignerID')));
+        $task->project()->associate(Project::find($validated['projectID']));
+        $task->title = $validated['title'];
+        $task->description = $validated['description'];
+        $task->author()->associate(User::find($validated['authorID']));
+        $task->assigner()->associate(User::find($validated['assignerID']));
         $task->save();
         return response()->json([
             'success' => true,
@@ -34,20 +30,17 @@ class TaskController extends Controller
         ]);
     }
 
-    public function update(Request $request, Task $task)
+    public function update(UpdateTaskRequest $request, Task $task)
     {
-        $this->validate($request, [
-            'title' => 'min:4',
-            'description' => 'min:6'
-        ]);
+        $validated = $request->validated();
         if ($request->hasAny('title')) {
-            $task->update(['title' => $request->post('title')]);
+            $task->update(['title' => $validated['title']]);
         }
         if ($request->hasAny('description')) {
-            $task->update(['description' => $request->post('description')]);
+            $task->update(['description' => $validated['description']]);
         }
         if ($request->hasAny('assignerID')) {
-            $task->update(['assigner_id' => $request->post('assignerID')]);
+            $task->update(['assigner_id' => $validated['assignerID']]);
         }
         $task->save();
 
