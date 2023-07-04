@@ -3,24 +3,21 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\CreateUserRequest;
+use App\Http\Requests\Api\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function create(Request $request)
+    public function create(CreateUserRequest $request)
     {
-        $this->validate($request, [
-            'name' => 'required|min:4',
-            'email' => 'required|email',
-            'password' => 'required|min:6',
-        ]);
-
+        $validated = $request->validated();
         $user = User::create([
-            'name' => $request->post('name'),
-            'email' => $request->post('email'),
-            'password' => bcrypt($request->post('password'))
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => bcrypt($validated['password'])
         ]);
         return response()->json([
             'success' => true,
@@ -29,21 +26,17 @@ class UserController extends Controller
         ]);
     }
 
-    public function update(Request $request, User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        $this->validate($request, [
-            'name' => 'min:4',
-            'email' => 'email',
-            'password' => 'min:6',
-        ]);
+        $validated = $request->validated();
         if ($request->hasAny('name')) {
-            $user->update(['name' => $request->post('name')]);
+            $user->update(['name' => $validated['name']]);
         }
         if ($request->hasAny('email')) {
-            $user->update(['email' => $request->post('email')]);
+            $user->update(['email' => $validated['email']]);
         }
         if ($request->hasAny('password')) {
-            $user->update(['password' => bcrypt($request->post('password'))]);
+            $user->update(['password' => bcrypt($validated['password'])]);
         }
         $user->save();
 
