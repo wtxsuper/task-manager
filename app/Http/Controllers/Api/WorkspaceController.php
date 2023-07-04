@@ -3,21 +3,22 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\CreateWorkspaceRequest;
+use App\Http\Requests\Api\UniversalAddUserRequest;
+use App\Http\Requests\Api\UniversalRemoveUserRequest;
+use App\Http\Requests\Api\UpdateWorkspaceRequest;
 use App\Models\Workspace;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class WorkspaceController extends Controller
 {
-    public function create(Request $request)
+    public function create(CreateWorkspaceRequest $request)
     {
-        $this->validate($request, [
-            'name' => 'required|min:4',
-            'ownerID' => 'required'
-        ]);
+        $validated = $request->validated();
 
-        $workspace = Workspace::create(['name' => $request->name]);
-        $workspace->users()->sync([$request->post('ownerID') => ['is_admin' => true]]);
+        $workspace = Workspace::create(['name' => $validated['name']]);
+        $workspace->users()->sync([$validated['ownerID'] => ['is_admin' => true]]);
 
         return response()->json([
             'success' => true,
@@ -26,13 +27,11 @@ class WorkspaceController extends Controller
         ]);
     }
 
-    public function update(Request $request, Workspace $workspace)
+    public function update(UpdateWorkspaceRequest $request, Workspace $workspace)
     {
-        $this->validate($request, [
-            'name' => 'required|min:4',
-        ]);
+        $validated = $request->validated();
 
-        $workspace->update(['name' => $request->post('name')]);
+        $workspace->update(['name' => $validated['name']]);
         $workspace->save();
 
         return response()->json([
@@ -60,29 +59,23 @@ class WorkspaceController extends Controller
         ]);
     }
 
-    public function addUser(Request $request, Workspace $workspace)
+    public function addUser(UniversalAddUserRequest $request, Workspace $workspace)
     {
-        $this->validate($request, [
-            'userID' => 'required',
-            'isAdmin' => 'required'
-        ]);
+        $validated = $request->validated();
 
 
-        $workspace->users()->syncWithoutDetaching([$request->post('userID') => ['is_admin' => json_decode($request->post('isAdmin'))]]);
+        $workspace->users()->syncWithoutDetaching([$validated['userID'] => ['is_admin' => json_decode($validated['isAdmin'])]]);
         return response()->json([
             'success' => true,
             'message' => 'User successfully added to workspace!'
         ]);
     }
 
-    public function removeUser(Request $request, Workspace $workspace)
+    public function removeUser(UniversalRemoveUserRequest $request, Workspace $workspace)
     {
-        $this->validate($request, [
-            'userID' => 'required',
-        ]);
+        $validated = $request->validated();
 
-
-        $workspace->users()->detach([$request->post('userID')]);
+        $workspace->users()->detach([$validated['userID']]);
         return response()->json([
             'success' => true,
             'message' => 'User successfully removed from workspace!'
